@@ -1,0 +1,16 @@
+[{"cat": "process", "name": "getconf", "id": 0, "pid": 0, "ph": "b", "ts": 1674943786156738, "args": ["_NPROCESSORS_ONLN"]}
+,{"name": "live_words", "pid": 0, "tid": 0, "ph": "C", "ts": 1674943786156826, "args": {"value": 29707}}
+,{"name": "free_words", "pid": 0, "tid": 0, "ph": "C", "ts": 1674943786156832, "args": {"value": 461813}}
+,{"name": "stack_size", "pid": 0, "tid": 0, "ph": "C", "ts": 1674943786156838, "args": {"value": 164}}
+,{"name": "heap_words", "pid": 0, "tid": 0, "ph": "C", "ts": 1674943786156840, "args": {"value": 491520}}
+,{"name": "top_heap_words", "pid": 0, "tid": 0, "ph": "C", "ts": 1674943786156845, "args": {"value": 491520}}
+,{"name": "minor_words", "pid": 0, "tid": 0, "ph": "C", "ts": 1674943786156846, "args": {"value": 149641.00}}
+,{"name": "major_words", "pid": 0, "tid": 0, "ph": "C", "ts": 1674943786157289, "args": {"value": 29707.00}}
+,{"name": "promoted_words", "pid": 0, "tid": 0, "ph": "C", "ts": 1674943786157296, "args": {"value": 0.00}}
+,{"name": "compactions", "pid": 0, "tid": 0, "ph": "C", "ts": 1674943786157303, "args": {"value": 0}}
+,{"name": "major_collections", "pid": 0, "tid": 0, "ph": "C", "ts": 1674943786157309, "args": {"value": 0}}
+,{"name": "minor_collections", "pid": 0, "tid": 0, "ph": "C", "ts": 1674943786157310, "args": {"value": 0}}
+,{"name": "evaluated-rules", "pid": 0, "tid": 0, "ph": "C", "ts": 1674943786157315, "args": {"value": 0}}
+,{"name": "fds", "pid": 0, "tid": 0, "ph": "C", "ts": 1674943786185899, "args": {"value": 9}}
+,{"cat": "process", "name": "getconf", "id": 0, "pid": 0, "ph": "e", "ts": 1674943786185936}
+]

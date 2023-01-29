@@ -1,0 +1,6 @@
+description = ""
+requires = "ppx_inline_test.runtime-lib"
+archive(byte) = "GTLC.cma"
+archive(native) = "GTLC.cmxa"
+plugin(byte) = "GTLC.cma"
+plugin(native) = "GTLC.cmxs"

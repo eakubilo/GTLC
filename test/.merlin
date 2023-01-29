@@ -1,0 +1,33 @@
+EXCLUDE_QUERY_DIR
+B /Users/eakubilo/.opam/default/lib/base
+B /Users/eakubilo/.opam/default/lib/base/base_internalhash_types
+B /Users/eakubilo/.opam/default/lib/base/caml
+B /Users/eakubilo/.opam/default/lib/base/shadow_stdlib
+B /Users/eakubilo/.opam/default/lib/jane-street-headers
+B /Users/eakubilo/.opam/default/lib/ppx_compare/runtime-lib
+B /Users/eakubilo/.opam/default/lib/ppx_enumerate/runtime-lib
+B /Users/eakubilo/.opam/default/lib/ppx_hash/runtime-lib
+B /Users/eakubilo/.opam/default/lib/ppx_inline_test/config
+B /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib
+B /Users/eakubilo/.opam/default/lib/ppx_sexp_conv/runtime-lib
+B /Users/eakubilo/.opam/default/lib/sexplib0
+B /Users/eakubilo/.opam/default/lib/time_now
+B ../_build/default/bin/.GTLC.objs/byte
+B ../_build/default/test/.test.objs/byte
+S /Users/eakubilo/.opam/default/lib/base
+S /Users/eakubilo/.opam/default/lib/base/base_internalhash_types
+S /Users/eakubilo/.opam/default/lib/base/caml
+S /Users/eakubilo/.opam/default/lib/base/shadow_stdlib
+S /Users/eakubilo/.opam/default/lib/jane-street-headers
+S /Users/eakubilo/.opam/default/lib/ppx_compare/runtime-lib
+S /Users/eakubilo/.opam/default/lib/ppx_enumerate/runtime-lib
+S /Users/eakubilo/.opam/default/lib/ppx_hash/runtime-lib
+S /Users/eakubilo/.opam/default/lib/ppx_inline_test/config
+S /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib
+S /Users/eakubilo/.opam/default/lib/ppx_sexp_conv/runtime-lib
+S /Users/eakubilo/.opam/default/lib/sexplib0
+S /Users/eakubilo/.opam/default/lib/time_now
+S ../bin
+S .
+FLG -ppx ''\''/Users/eakubilo/Desktop/spring 2023/gradual typing/GTLC/_build/default/.ppx/bfcab61e6a21ecf6d2f80029fc1ef484/ppx.exe'\'' --as-ppx --cookie '\''inline_tests="enabled"'\'' --cookie '\''library-name="test"'\'''
+FLG -open Test -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs

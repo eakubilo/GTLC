@@ -1,0 +1,44 @@
+(lang dune 3.6)
+(name GTLC)
+(sections (lib .) (libexec .))
+(files
+ (lib
+  (AST.ml
+   GTLC.a
+   GTLC.cma
+   GTLC.cmxa
+   GTLC.ml
+   META
+   aST.cmi
+   aST.cmt
+   aST.cmx
+   dune-package
+   gTLC.cmi
+   gTLC.cmt
+   gTLC.cmx
+   lexer.cmi
+   lexer.cmt
+   lexer.cmx
+   lexer.ml
+   opam
+   parser.cmi
+   parser.cmt
+   parser.cmti
+   parser.cmx
+   parser.ml
+   parser.mli))
+ (libexec (GTLC.cmxs)))
+(library
+ (name GTLC)
+ (kind normal)
+ (archives (byte GTLC.cma) (native GTLC.cmxa))
+ (plugins (byte GTLC.cma) (native GTLC.cmxs))
+ (native_archives GTLC.a)
+ (requires ppx_inline_test.runtime-lib)
+ (modes byte native)
+ (modules
+  (unwrapped
+   ((name AST) (obj_name aST) (visibility public) (impl))
+   ((name GTLC) (obj_name gTLC) (visibility public) (impl))
+   ((name Lexer) (obj_name lexer) (visibility public) (impl))
+   ((name Parser) (obj_name parser) (visibility public) (impl) (intf)))))
