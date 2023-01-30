@@ -18,7 +18,7 @@ type expr =
   | UnlabeledApp of expr * expr
   | App of expr * expr * blame_label
 
-type contract = Contract of types * types * blame_label
+type cast = Cast of types * types * blame_label
 
 type cast_expressions =
   | True
@@ -27,5 +27,5 @@ type cast_expressions =
   | Var of string
   | Lam of var * types * cast_expressions
   | App of cast_expressions * cast_expressions
-  | F of cast_expressions * contract
+  | F of cast_expressions * cast
   | Blame of types * blame_label

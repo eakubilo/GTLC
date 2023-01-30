@@ -117,8 +117,7 @@ let rec insert_cast gamma (e : expr) =
       let (Arrow (t11, t12)) = matched_fun t1 in
       if consistency (t2, t11) then
         ( App
-            ( F (f1, Cast (t1, Arrow (t11, t12), l))
-            , F (f2, Cast (t2, t11, l)) )
+            (F (f1, Cast (t1, Arrow (t11, t12), l)), F (f2, Cast (t2, t11, l)))
         , t12 )
       else raise InconsistentType
   | True ->
@@ -158,6 +157,7 @@ let rec rename name newname tm =
       F (rename name newname f, c)
   | _ ->
       tm
+
 (*capture-avoiding substitutiton*)
 let rec subst var s term =
   match term with
@@ -175,41 +175,43 @@ let rec subst var s term =
         Lam (Var fresh, t, subst var s newE)
   | _ ->
       term
+
 (*one-step evaluation*)
 let rec eval f =
   match f with
   | App (Lam (Var x, t, e), v) when is_value v ->
-      subst x v e
+      subst x v e (*BETA*)
   | F (v, Cast (B _, B _, _)) when is_value v ->
-      v
+      v (*IDBASE*)
   | F (v, Cast (Dyn, Dyn, _)) when is_value v ->
-      v
+      v (*IDSTAR*)
   | F (F (v, Cast (g1, Dyn, l1)), Cast (Dyn, g2, l2))
     when ground_type g1 && is_value v && g1 = g2 ->
-      v
+      v (*SUCCEED*)
   | F (F (v, Cast (g1, Dyn, l1)), Cast (Dyn, g2, l2))
     when ground_type g1 && ground_type g2 && is_value v ->
-      Blame (g2, l2)
+      Blame (g2, l2) (*FAIL*)
   | App (F (v1, Cast (Arrow (t1, t2), Arrow (t3, t4), l)), v2) ->
-      F (App (v1, F (v2, Cast (t3, t1, l))), Cast (t2, t4, l))
+      F (App (v1, F (v2, Cast (t3, t1, l))), Cast (t2, t4, l)) (*APPCAST*)
   | F (v, Cast (t, Dyn, l)) when is_value v && not (ground_type t) ->
-      F
-        ( F (v, Cast (t, Arrow (Dyn, Dyn), l))
-        , Cast (Arrow (Dyn, Dyn), Dyn, l) )
+      F (F (v, Cast (t, Arrow (Dyn, Dyn), l)), Cast (Arrow (Dyn, Dyn), Dyn, l))
+      (*GROUND*)
   | F (v, Cast (Dyn, t, l)) when is_value v && not (ground_type t) ->
-      F
-        ( F (v, Cast (Dyn, Arrow (Dyn, Dyn), l))
-        , Cast (Arrow (Dyn, Dyn), t, l) )
+      F (F (v, Cast (Dyn, Arrow (Dyn, Dyn), l)), Cast (Arrow (Dyn, Dyn), t, l))
+      (*EXPAND*)
   | F (f, c) when eval f <> f ->
       let f' = eval f in
       if f <> f' then F (f', c) else f
+      (*CONG*)
   | F (Blame (t, l), Cast (t1, t2, _)) when t = t1 ->
-      Blame (t2, l)
+      Blame (t2, l) (*BLAME*)
   | App (e, f) when not (is_value e) ->
-      App (eval e, f)
+      App (eval e, f) (*CONG*)
   | App (e, f) when not (is_value f) ->
       App (e, eval f)
-      
+
+(*CONG*)
+
 (*helper functions to evaluate*)
 let rec eval' t =
   if is_result t then t
