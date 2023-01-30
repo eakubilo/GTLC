@@ -97,9 +97,9 @@ let rec is_value f =
       true
   | Lam (_, _, _) ->
       true
-  | F (v, Contract (Arrow (_, _), Arrow (_, _), Label _)) when is_value v ->
+  | F (v, Cast (Arrow (_, _), Arrow (_, _), Label _)) when is_value v ->
       true
-  | F (v, Contract (t, Dyn, Label _)) when ground_type t && is_value v ->
+  | F (v, Cast (t, Dyn, Label _)) when ground_type t && is_value v ->
       true
   | _ ->
       false
@@ -117,8 +117,8 @@ let rec insert_cast gamma (e : expr) =
       let (Arrow (t11, t12)) = matched_fun t1 in
       if consistency (t2, t11) then
         ( App
-            ( F (f1, Contract (t1, Arrow (t11, t12), l))
-            , F (f2, Contract (t2, t11, l)) )
+            ( F (f1, Cast (t1, Arrow (t11, t12), l))
+            , F (f2, Cast (t2, t11, l)) )
         , t12 )
       else raise InconsistentType
   | True ->
@@ -143,10 +143,6 @@ let make_fresh_var () =
   "_x" ^ string_of_int !y
 
 (* rename free variables. newname is to be a fresh name.
-   Therefore capture cannot occur, so we do not consider the problem.
-    i.e. reame name newname tm REPLACES every free occurrence of name 
-   by newname in tm, without trying to avoid capture. It must be used to
-   define subst.
    rename:string -> string -> term -> term
  *)
 let rec rename name newname tm =
@@ -162,7 +158,7 @@ let rec rename name newname tm =
       F (rename name newname f, c)
   | _ ->
       tm
-
+(*capture-avoiding substitutiton*)
 let rec subst var s term =
   match term with
   | F (f, c) ->
@@ -179,41 +175,42 @@ let rec subst var s term =
         Lam (Var fresh, t, subst var s newE)
   | _ ->
       term
-
+(*one-step evaluation*)
 let rec eval f =
   match f with
   | App (Lam (Var x, t, e), v) when is_value v ->
       subst x v e
-  | F (v, Contract (B _, B _, _)) when is_value v ->
+  | F (v, Cast (B _, B _, _)) when is_value v ->
       v
-  | F (v, Contract (Dyn, Dyn, _)) when is_value v ->
+  | F (v, Cast (Dyn, Dyn, _)) when is_value v ->
       v
-  | F (F (v, Contract (g1, Dyn, l1)), Contract (Dyn, g2, l2))
+  | F (F (v, Cast (g1, Dyn, l1)), Cast (Dyn, g2, l2))
     when ground_type g1 && is_value v && g1 = g2 ->
       v
-  | F (F (v, Contract (g1, Dyn, l1)), Contract (Dyn, g2, l2))
+  | F (F (v, Cast (g1, Dyn, l1)), Cast (Dyn, g2, l2))
     when ground_type g1 && ground_type g2 && is_value v ->
       Blame (g2, l2)
-  | App (F (v1, Contract (Arrow (t1, t2), Arrow (t3, t4), l)), v2) ->
-      F (App (v1, F (v2, Contract (t3, t1, l))), Contract (t2, t4, l))
-  | F (v, Contract (t, Dyn, l)) when is_value v && not (ground_type t) ->
+  | App (F (v1, Cast (Arrow (t1, t2), Arrow (t3, t4), l)), v2) ->
+      F (App (v1, F (v2, Cast (t3, t1, l))), Cast (t2, t4, l))
+  | F (v, Cast (t, Dyn, l)) when is_value v && not (ground_type t) ->
       F
-        ( F (v, Contract (t, Arrow (Dyn, Dyn), l))
-        , Contract (Arrow (Dyn, Dyn), Dyn, l) )
-  | F (v, Contract (Dyn, t, l)) when is_value v && not (ground_type t) ->
+        ( F (v, Cast (t, Arrow (Dyn, Dyn), l))
+        , Cast (Arrow (Dyn, Dyn), Dyn, l) )
+  | F (v, Cast (Dyn, t, l)) when is_value v && not (ground_type t) ->
       F
-        ( F (v, Contract (Dyn, Arrow (Dyn, Dyn), l))
-        , Contract (Arrow (Dyn, Dyn), t, l) )
+        ( F (v, Cast (Dyn, Arrow (Dyn, Dyn), l))
+        , Cast (Arrow (Dyn, Dyn), t, l) )
   | F (f, c) when eval f <> f ->
       let f' = eval f in
       if f <> f' then F (f', c) else f
-  | F (Blame (t, l), Contract (t1, t2, _)) when t = t1 ->
+  | F (Blame (t, l), Cast (t1, t2, _)) when t = t1 ->
       Blame (t2, l)
   | App (e, f) when not (is_value e) ->
       App (eval e, f)
   | App (e, f) when not (is_value f) ->
       App (e, eval f)
-
+      
+(*helper functions to evaluate*)
 let rec eval' t =
   if is_result t then t
   else match eval t with exception _ -> t | t' -> eval' t'

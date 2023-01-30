@@ -128,7 +128,7 @@ let%test _ = well_typed_gtlc [] (parse "true") = B Bool
 let%test _ = well_typed_gtlc [] (parse "false") = B Bool
 
 let%test _ =
-  evalString "(\\x.x) 1" = F (Int 1, Contract (B Int, Dyn, make_fresh_label ()))
+  evalString "(\\x.x) 1" = F (Int 1, Cast (B Int, Dyn, make_fresh_label ()))
 
 let%test _ = evalString "(\\x:int.x) 1" = Int 1
 
@@ -163,5 +163,5 @@ let%test _ =
   = F
       ( F
           ( Lam (Var "x", B Int, Var "x")
-          , Contract (Arrow (B Int, B Int), Arrow (Dyn, Dyn), l) )
-      , Contract (Arrow (Dyn, Dyn), Dyn, l) )
+          , Cast (Arrow (B Int, B Int), Arrow (Dyn, Dyn), l) )
+      , Cast (Arrow (Dyn, Dyn), Dyn, l) )

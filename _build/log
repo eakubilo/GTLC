@@ -3,7 +3,7 @@
 # Shared cache: disabled
 # Workspace root: "/Users/eakubilo/Desktop/spring 2023/gradual typing/GTLC"
 # Auto-detected concurrency: 8
-$ /usr/local/bin/ocamlc.opt -config > /var/folders/m7/pd02yhn15515bk5gc0vsg5fc0000gq/T/dune_282ebe_output
+$ /usr/local/bin/ocamlc.opt -config > /var/folders/m7/pd02yhn15515bk5gc0vsg5fc0000gq/T/dune_b985c2_output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -130,43 +130,3 @@ $ /usr/local/bin/ocamlc.opt -config > /var/folders/m7/pd02yhn15515bk5gc0vsg5fc00
 #      ; windows_unicode = false
 #      }
 #  }
-$ (cd _build/.sandbox/8f33beeb2878270e002c5ecd23ab44fd/default && .ppx/bfcab61e6a21ecf6d2f80029fc1ef484/ppx.exe --cookie 'inline_tests="enabled"' --cookie 'library-name="GTLC"' -o bin/GTLC.pp.ml --impl bin/GTLC.ml -corrected-suffix .ppx-corrected -diff-cmd - -dump-ast)
-$ (cd _build/default && /usr/local/bin/ocamldep.opt -modules -impl bin/GTLC.pp.ml) > _build/default/bin/.GTLC.objs/GTLC.pp.ml.d
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -bin-annot -I bin/.GTLC.objs/byte -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -no-alias-deps -opaque -o bin/.GTLC.objs/byte/gTLC.cmo -c -impl bin/GTLC.pp.ml)
-> File "bin/GTLC.ml", line 81, characters 6-116:
-> Warning 8: this pattern-matching is not exhaustive.
-> Here is an example of a case that is not matched:
-> (Dyn|B _)
-> File "bin/GTLC.ml", line 117, characters 6-251:
-> Warning 8: this pattern-matching is not exhaustive.
-> Here is an example of a case that is not matched:
-> (Dyn|B _)
-> File "bin/GTLC.ml", line 184, characters 2-1270:
-> Warning 8: this pattern-matching is not exhaustive.
-> Here is an example of a case that is not matched:
-> (App (F (_, Contract (Arrow (_, _), (Dyn|B _), _)), _)|
-> App (F (_, Contract ((Dyn|B _), _, _)), _)|
-> App ((True|False|Int _|Var _|Lam (_, _, _)|App (_, _)|Blame (_, _)), _)|True|
-> False|Int _|Var _|Lam (_, _, _)|F (_, _)|Blame (_, _))
-> (However, some guarded clause may match this value.)
-> File "bin/GTLC.ml", line 96, characters 8-9:
-> Warning 27: unused variable i.
-> File "bin/GTLC.ml", line 185, characters 21-22:
-> Warning 27: unused variable t.
-> File "bin/GTLC.ml", line 191, characters 32-34:
-> Warning 27: unused variable l1.
-> File "bin/GTLC.ml", line 191, characters 57-59:
-> Warning 27: unused variable l2.
-> File "bin/GTLC.ml", line 194, characters 32-34:
-> Warning 27: unused variable l1.
-> File "bin/GTLC.ml", line 227, characters 13-14:
-> Warning 27: unused variable t.
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -a -o bin/GTLC.cma bin/.GTLC.objs/byte/aST.cmo bin/.GTLC.objs/byte/parser.cmo bin/.GTLC.objs/byte/lexer.cmo bin/.GTLC.objs/byte/gTLC.cmo)
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I test/.test.objs/byte -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -no-alias-deps -opaque -open Test -o test/.test.objs/byte/test__Main.cmo -c -impl test/main.pp.ml)
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -a -o test/test.cma test/.test.objs/byte/test.cmo test/.test.objs/byte/test__Main.cmo)
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -bin-annot -I .utop/.utop.eobjs/byte -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/bigarray-compat -I /Users/eakubilo/.opam/default/lib/camomile -I /Users/eakubilo/.opam/default/lib/camomile/default_config -I /Users/eakubilo/.opam/default/lib/camomile/dyn -I /Users/eakubilo/.opam/default/lib/camomile/lib_default -I /Users/eakubilo/.opam/default/lib/camomile/library -I /Users/eakubilo/.opam/default/lib/charInfo_width -I /Users/eakubilo/.opam/default/lib/findlib -I /Users/eakubilo/.opam/default/lib/lambda-term -I /Users/eakubilo/.opam/default/lib/lwt -I /Users/eakubilo/.opam/default/lib/lwt/unix -I /Users/eakubilo/.opam/default/lib/lwt_log -I /Users/eakubilo/.opam/default/lib/lwt_log/core -I /Users/eakubilo/.opam/default/lib/lwt_react -I /Users/eakubilo/.opam/default/lib/mew -I /Users/eakubilo/.opam/default/lib/mew_vi -I /Users/eakubilo/.opam/default/lib/mmap -I /Users/eakubilo/.opam/default/lib/ocplib-endian -I /Users/eakubilo/.opam/default/lib/ocplib-endian/bigstring -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/react -I /Users/eakubilo/.opam/default/lib/result -I /Users/eakubilo/.opam/default/lib/seq -I /Users/eakubilo/.opam/default/lib/sexplib0 -I /Users/eakubilo/.opam/default/lib/trie -I /Users/eakubilo/.opam/default/lib/utop -I /Users/eakubilo/.opam/default/lib/zed -I /usr/local/lib/ocaml/compiler-libs -I /usr/local/lib/ocaml/threads -I bin/.GTLC.objs/byte -I test/.test.objs/byte -no-alias-deps -o .utop/.utop.eobjs/byte/dune__exe__Utop.cmo -c -impl .utop/utop.ml-gen)
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -o .utop/utop.exe -custom /usr/local/lib/ocaml/compiler-libs/ocamlcommon.cma /usr/local/lib/ocaml/compiler-libs/ocamlbytecomp.cma /usr/local/lib/ocaml/compiler-libs/ocamltoplevel.cma /Users/eakubilo/.opam/default/lib/findlib/findlib.cma /Users/eakubilo/.opam/default/lib/findlib/findlib_top.cma -I /usr/local/lib/ocaml /Users/eakubilo/.opam/default/lib/result/result.cma /Users/eakubilo/.opam/default/lib/lwt/lwt.cma /usr/local/lib/ocaml/unix.cma -I /usr/local/lib/ocaml /usr/local/lib/ocaml/bigarray.cma -I /usr/local/lib/ocaml /Users/eakubilo/.opam/default/lib/bigarray-compat/bigarray_compat.cma /Users/eakubilo/.opam/default/lib/mmap/mmap.cma /Users/eakubilo/.opam/default/lib/ocplib-endian/ocplib_endian.cma /Users/eakubilo/.opam/default/lib/ocplib-endian/bigstring/ocplib_endian_bigstring.cma /usr/local/lib/ocaml/threads/threads.cma -I /usr/local/lib/ocaml /Users/eakubilo/.opam/default/lib/lwt/unix/lwt_unix.cma -I /Users/eakubilo/.opam/default/lib/lwt/unix /Users/eakubilo/.opam/default/lib/react/react.cma /Users/eakubilo/.opam/default/lib/lwt_react/lwt_react.cma /Users/eakubilo/.opam/default/lib/camomile/default_config/camomileDefaultConfig.cma /Users/eakubilo/.opam/default/lib/camomile/library/camomileLibrary.cma /Users/eakubilo/.opam/default/lib/camomile/lib_default/camomileLibraryDefault.cma /Users/eakubilo/.opam/default/lib/camomile/dyn/camomileLibraryDyn.cma /Users/eakubilo/.opam/default/lib/camomile/camomile_yuge.cma /Users/eakubilo/.opam/default/lib/charInfo_width/charInfo_width.cma /Users/eakubilo/.opam/default/lib/zed/zed.cma /Users/eakubilo/.opam/default/lib/lwt_log/core/lwt_log_core.cma /Users/eakubilo/.opam/default/lib/lwt_log/lwt_log.cma /Users/eakubilo/.opam/default/lib/trie/trie.cma /Users/eakubilo/.opam/default/lib/mew/mew.cma /Users/eakubilo/.opam/default/lib/mew_vi/mew_vi.cma /Users/eakubilo/.opam/default/lib/lambda-term/lambda_term.cma -I /Users/eakubilo/.opam/default/lib/lambda-term /Users/eakubilo/.opam/default/lib/utop/uTop.cma /Users/eakubilo/.opam/default/lib/base/base_internalhash_types/base_internalhash_types.cma -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types /Users/eakubilo/.opam/default/lib/base/caml/caml.cma /Users/eakubilo/.opam/default/lib/sexplib0/sexplib0.cma /Users/eakubilo/.opam/default/lib/base/shadow_stdlib/shadow_stdlib.cma /Users/eakubilo/.opam/default/lib/base/base.cma -I /Users/eakubilo/.opam/default/lib/base /Users/eakubilo/.opam/default/lib/ppx_inline_test/config/inline_test_config.cma /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib/ppx_inline_test_lib.cma bin/GTLC.cma test/test.cma .utop/.utop.eobjs/byte/dune__exe__Utop.cmo -linkall -warn-error -31)
-> File "bin/GTLC.cma(Parser)", line 1:
-> Warning 31: files bin/GTLC.cma(Parser) and /usr/local/lib/ocaml/compiler-libs/ocamlcommon.cma(Parser) both define a module named Parser
-> File "bin/GTLC.cma(Lexer)", line 1:
-> Warning 31: files bin/GTLC.cma(Lexer) and /usr/local/lib/ocaml/compiler-libs/ocamlcommon.cma(Lexer) both define a module named Lexer
