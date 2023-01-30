@@ -1,3 +1,4 @@
+(*GTLC language*)
 type blame_label = Label of string
 
 type base_types = Int | Bool
@@ -16,3 +17,15 @@ type expr =
   | Lam of var * types * expr
   | UntypedLam of var * expr
   | App of expr * expr * blame_label
+
+type contract = Contract of types * types * blame_label
+
+type cast_expressions =
+  | True
+  | False
+  | Int of int
+  | Var of string
+  | Lam of var * types * cast_expressions
+  | App of cast_expressions * cast_expressions
+  | F of cast_expressions * contract
+  | Blame of types * blame_label

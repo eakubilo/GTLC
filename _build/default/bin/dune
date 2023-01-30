@@ -1,7 +1,10 @@
 (library
  (public_name GTLC)
  (name GTLC)
- (wrapped false))
+ (wrapped false)
+ (inline_tests)
+ (preprocess
+  (pps ppx_inline_test)))
 
 (menhir
  (modules parser))

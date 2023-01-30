@@ -1,6 +1,6 @@
 (lang dune 3.6)
 (name GTLC)
-(sections (lib .) (libexec .))
+(sections (lib .) (libexec .) (doc ../../doc/GTLC))
 (files
  (lib
   (AST.ml
@@ -27,7 +27,8 @@
    parser.cmx
    parser.ml
    parser.mli))
- (libexec (GTLC.cmxs)))
+ (libexec (GTLC.cmxs))
+ (doc (README.md)))
 (library
  (name GTLC)
  (kind normal)

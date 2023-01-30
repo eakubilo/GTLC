@@ -27,3 +27,6 @@ lib: [
 libexec: [
   "_build/install/default/lib/GTLC/GTLC.cmxs"
 ]
+doc: [
+  "_build/install/default/doc/GTLC/README.md"
+]
