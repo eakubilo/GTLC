@@ -6,6 +6,8 @@ let make_fresh_label () =
   y := !y + 1 ;
   AST.Label !y
 
+let is_exception e = match e () with exception _ -> true | _ -> false
+
 let%test _ = parse "0" = Int 0
 
 let%test _ = parse "\\x : int .x" = Lam (Var "x", B Int, Var "x")
@@ -112,14 +114,54 @@ let%test _ =
 let%test _ = well_typed_gtlc [] (parse "\\x:int.x") = Arrow (B Int, B Int)
 
 let%test _ =
-  match well_typed_gtlc [] (parse "\\x:int\\y:bool.x y") with
-  | exception _ ->
-      true
-  | _ ->
-      false
+  is_exception (fun _ -> well_typed_gtlc [] (parse "\\x:int\\y:bool.x y"))
+
+(*throwaway*)
+
+;;
+make_fresh_label ()
 
 let%test _ = well_typed_gtlc [] (parse "0") = B Int
 
 let%test _ = well_typed_gtlc [] (parse "true") = B Bool
 
 let%test _ = well_typed_gtlc [] (parse "false") = B Bool
+
+let%test _ =
+  evalString "(\\x.x) 1" = F (Int 1, Contract (B Int, Dyn, make_fresh_label ()))
+
+let%test _ = evalString "(\\x:int.x) 1" = Int 1
+
+;;
+make_fresh_label ()
+
+let%test _ = evalString "(\\y:int.y) (\\x:int.x) 1" = Int 1
+
+;;
+make_fresh_label ()
+
+;;
+make_fresh_label ()
+
+let%test _ = evalString "(\\y:bool.y) (\\x:int.x) 1" = Int 1
+
+;;
+make_fresh_label ()
+
+;;
+make_fresh_label ()
+
+let%test _ = is_exception (fun _ -> evalString "(\\y:bool.y) (\\x:int.x)")
+
+;;
+make_fresh_label ()
+
+let l = make_fresh_label ()
+
+let%test _ =
+  evalString "(\\y.y) (\\x:int.x)"
+  = F
+      ( F
+          ( Lam (Var "x", B Int, Var "x")
+          , Contract (Arrow (B Int, B Int), Arrow (Dyn, Dyn), l) )
+      , Contract (Arrow (Dyn, Dyn), Dyn, l) )
