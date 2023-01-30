@@ -1,1 +1,1 @@
-test/main.pp.ml: GTLC Inline_test_config Ppx_inline_test_lib
+test/main.pp.ml: AST GTLC Inline_test_config Ppx_inline_test_lib

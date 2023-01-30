@@ -1,5 +1,11 @@
 open GTLC
 
+let y = ref 0
+
+let make_fresh_label () =
+  y := !y + 1 ;
+  AST.Label !y
+
 let%test _ = parse "0" = Int 0
 
 let%test _ = parse "\\x : int .x" = Lam (Var "x", B Int, Var "x")
@@ -20,26 +26,31 @@ let%test _ =
   = Lam (Var "x", Arrow (B Int, Arrow (B Int, B Int)), Var "x")
 
 let%test _ =
-  parse "\\x.(x x):LABEL(application)"
-  = Lam (Var "x", Dyn, App (Var "x", Var "x", Label "application"))
+  parse "\\x.(x x)"
+  = Lam (Var "x", Dyn, App (Var "x", Var "x", make_fresh_label ()))
 
 let%test _ =
-  parse "\\x.((x x):LABEL(first) x):LABEL(second)"
+  parse "\\x.(x x) x"
   = Lam
       ( Var "x"
       , Dyn
-      , App (App (Var "x", Var "x", Label "first"), Var "x", Label "second") )
+      , App
+          ( App (Var "x", Var "x", make_fresh_label ())
+          , Var "x"
+          , make_fresh_label () ) )
 
 let%test _ =
-  parse "\\x:int.((x x):LABEL(first) x):LABEL(second)"
+  parse "\\x:int.(x x) x"
   = Lam
       ( Var "x"
       , B Int
-      , App (App (Var "x", Var "x", Label "first"), Var "x", Label "second") )
+      , App
+          ( App (Var "x", Var "x", make_fresh_label ())
+          , Var "x"
+          , make_fresh_label () ) )
 
 let%test _ =
-  parse
-    "\\x:int.\\y:bool.(y ((x x):LABEL(first) x):LABEL(second)):LABEL(third)"
+  parse "\\x:int.\\y:bool.y ((x x) x)"
   = Lam
       ( Var "x"
       , B Int
@@ -49,15 +60,13 @@ let%test _ =
           , App
               ( Var "y"
               , App
-                  ( App (Var "x", Var "x", Label "first")
+                  ( App (Var "x", Var "x", make_fresh_label ())
                   , Var "x"
-                  , Label "second" )
-              , Label "third" ) ) )
+                  , make_fresh_label () )
+              , make_fresh_label () ) ) )
 
 let%test _ =
-  parse
-    "\\x:int->int.\\y:bool.(y ((x x):LABEL(first) \
-     x):LABEL(second)):LABEL(third)"
+  parse "\\x:int->int.\\y:bool.y ((x x) x)"
   = Lam
       ( Var "x"
       , Arrow (B Int, B Int)
@@ -67,10 +76,10 @@ let%test _ =
           , App
               ( Var "y"
               , App
-                  ( App (Var "x", Var "x", Label "first")
+                  ( App (Var "x", Var "x", make_fresh_label ())
                   , Var "x"
-                  , Label "second" )
-              , Label "third" ) ) )
+                  , make_fresh_label () )
+              , make_fresh_label () ) ) )
 
 let%test _ = consistency (B Int, B Bool) = true
 
@@ -103,7 +112,7 @@ let%test _ =
 let%test _ = well_typed_gtlc [] (parse "\\x:int.x") = Arrow (B Int, B Int)
 
 let%test _ =
-  match well_typed_gtlc [] (parse "\\x:int\\y:bool.(x y):LABEL(first)") with
+  match well_typed_gtlc [] (parse "\\x:int\\y:bool.x y") with
   | exception _ ->
       true
   | _ ->

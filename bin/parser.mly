@@ -34,7 +34,7 @@ expr:
     | TRUE { True }
     | FALSE { False }
     | LAM; x=ID; e= expr {Lam(Var(x), Dyn, e)}
-    | LPAREN; e1 = expr; e2 = expr; RPAREN; l = LABEL {App(e1, e2, Label(l))}
+    | e1 = expr; e2 = expr {UnlabeledApp(e1, e2)}
     | LPAREN; e=expr; RPAREN {e} 
 
 types:

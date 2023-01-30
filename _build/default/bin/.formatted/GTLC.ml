@@ -1,9 +1,24 @@
 open AST
 
+let a = ref 0
+
+let make_fresh_label () =
+  a := !a + 1 ;
+  Label !a
+
+let rec label_expression e : expr =
+  match e with
+  | UnlabeledApp (e1, e2) ->
+      App (label_expression e1, label_expression e2, make_fresh_label ())
+  | Lam (x, t, e) ->
+      Lam (x, t, label_expression e)
+  | _ ->
+      e
+
 let parse (s : string) : expr =
   let lexbuf = Lexing.from_string s in
   let ast = Parser.prog Lexer.read lexbuf in
-  ast
+  label_expression ast
 
 let rec consistency (t1, t2) =
   match (t1, t2) with
@@ -97,7 +112,7 @@ let rec insert_cast gamma (e : expr) =
       let (Arrow (t11, t12)) = matched_fun t1 in
       if consistency (t2, t11) then
         ( App
-            ( F (f1, Contract (t11, Arrow (t11, t12), l))
+            ( F (f1, Contract (t1, Arrow (t11, t12), l))
             , F (f2, Contract (t2, t11, l)) )
         , t12 )
       else raise InconsistentType
@@ -116,11 +131,11 @@ let rec insert_cast gamma (e : expr) =
       (True, B Bool)
 
 (* counter for fresh variables *)
-let x = ref 0
+let y = ref 0
 
 let make_fresh_var () =
-  x := !x + 1 ;
-  "_x" ^ string_of_int !x
+  y := !y + 1 ;
+  "_x" ^ string_of_int !y
 
 (* rename free variables. newname is to be a fresh name.
    Therefore capture cannot occur, so we do not consider the problem.
@@ -202,9 +217,7 @@ let rec eval f =
 
 let rec eval' t =
   if is_result t then t
-  else
-    let t' = eval t in
-    match t' with exception _ -> t | _ -> eval' t'
+  else match eval t with exception _ -> t | t' -> eval' t'
 
 let evalString s =
   let ast = parse s in

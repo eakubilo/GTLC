@@ -25,6 +25,5 @@ rule read =
   |"bool"{BOOL_TYPE}
   |"dyn" {DYN_TYPE}
   | "->" white* {ARROW_TYPE}
-  | ":LABEL(" (id as label) ")" {LABEL(label)}
   | id { ID (Lexing.lexeme lexbuf) }
   | eof { EOF }
