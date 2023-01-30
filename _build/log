@@ -1,9 +1,9 @@
-# dune build --watch --terminal-persistence=clear-on-rebuild @fmt @all @install @runtest --auto-promote
+# dune utop
 # OCAMLPARAM: unset
 # Shared cache: disabled
 # Workspace root: "/Users/eakubilo/Desktop/spring 2023/gradual typing/GTLC"
 # Auto-detected concurrency: 8
-$ /usr/local/bin/ocamlc.opt -config > /var/folders/m7/pd02yhn15515bk5gc0vsg5fc0000gq/T/dune_304995_output
+$ /usr/local/bin/ocamlc.opt -config > /var/folders/m7/pd02yhn15515bk5gc0vsg5fc0000gq/T/dune_282ebe_output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -130,250 +130,43 @@ $ /usr/local/bin/ocamlc.opt -config > /var/folders/m7/pd02yhn15515bk5gc0vsg5fc00
 #      ; windows_unicode = false
 #      }
 #  }
-$ (cd _build/default && /Users/eakubilo/.opam/default/bin/ocamlformat --impl test/main.ml) > _build/default/test/.formatted/main.ml
-$ (cd _build/.sandbox/da1ab29aad2878eee22500ef927e747a/default && .ppx/bfcab61e6a21ecf6d2f80029fc1ef484/ppx.exe --cookie 'inline_tests="enabled"' --cookie 'library-name="test"' -o test/main.pp.ml --impl test/main.ml -corrected-suffix .ppx-corrected -diff-cmd - -dump-ast)
-$ /usr/bin/git --no-pager diff --no-index --color=always -u _build/default/test/main.ml _build/default/test/.formatted/main.ml
-> diff --git a/_build/default/test/main.ml b/_build/default/test/.formatted/main.ml
-> index 01fcf8c..56de191 100644
-> --- a/_build/default/test/main.ml
-> +++ b/_build/default/test/.formatted/main.ml
-> @@ -138,8 +138,10 @@ let%test _ = evalString "(\\y:bool.y) (\\x:int.x) 1" = Int 1
->  
->  let%test _ = is_exception (fun _ -> evalString "(\\y:bool.y) (\\x:int.x)")
->  
-> -let%test _ = evalString "(\\y.y) (\\x:int.x)" = F
-> -(F (Lam (Var "x", B Int, Var "x"),
-> -  Contract (Arrow (B Int, B Int),
-> -   Arrow (Dyn, Dyn), Label 1)),
-> -Contract (Arrow (Dyn, Dyn), Dyn, Label 1))
-> +let%test _ =
-> +  evalString "(\\y.y) (\\x:int.x)"
-> +  = F
-> +      ( F
-> +          ( Lam (Var "x", B Int, Var "x")
-> +          , Contract (Arrow (B Int, B Int), Arrow (Dyn, Dyn), Label 1) )
-> +      , Contract (Arrow (Dyn, Dyn), Dyn, Label 1) )
-[1]
-$ (cd _build/default && /usr/local/bin/ocamldep.opt -modules -impl test/main.pp.ml) > _build/default/test/.test.objs/main.pp.ml.d
+$ (cd _build/.sandbox/8f33beeb2878270e002c5ecd23ab44fd/default && .ppx/bfcab61e6a21ecf6d2f80029fc1ef484/ppx.exe --cookie 'inline_tests="enabled"' --cookie 'library-name="GTLC"' -o bin/GTLC.pp.ml --impl bin/GTLC.ml -corrected-suffix .ppx-corrected -diff-cmd - -dump-ast)
+$ (cd _build/default && /usr/local/bin/ocamldep.opt -modules -impl bin/GTLC.pp.ml) > _build/default/bin/.GTLC.objs/GTLC.pp.ml.d
+$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -bin-annot -I bin/.GTLC.objs/byte -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -no-alias-deps -opaque -o bin/.GTLC.objs/byte/gTLC.cmo -c -impl bin/GTLC.pp.ml)
+> File "bin/GTLC.ml", line 81, characters 6-116:
+> Warning 8: this pattern-matching is not exhaustive.
+> Here is an example of a case that is not matched:
+> (Dyn|B _)
+> File "bin/GTLC.ml", line 117, characters 6-251:
+> Warning 8: this pattern-matching is not exhaustive.
+> Here is an example of a case that is not matched:
+> (Dyn|B _)
+> File "bin/GTLC.ml", line 184, characters 2-1270:
+> Warning 8: this pattern-matching is not exhaustive.
+> Here is an example of a case that is not matched:
+> (App (F (_, Contract (Arrow (_, _), (Dyn|B _), _)), _)|
+> App (F (_, Contract ((Dyn|B _), _, _)), _)|
+> App ((True|False|Int _|Var _|Lam (_, _, _)|App (_, _)|Blame (_, _)), _)|True|
+> False|Int _|Var _|Lam (_, _, _)|F (_, _)|Blame (_, _))
+> (However, some guarded clause may match this value.)
+> File "bin/GTLC.ml", line 96, characters 8-9:
+> Warning 27: unused variable i.
+> File "bin/GTLC.ml", line 185, characters 21-22:
+> Warning 27: unused variable t.
+> File "bin/GTLC.ml", line 191, characters 32-34:
+> Warning 27: unused variable l1.
+> File "bin/GTLC.ml", line 191, characters 57-59:
+> Warning 27: unused variable l2.
+> File "bin/GTLC.ml", line 194, characters 32-34:
+> Warning 27: unused variable l1.
+> File "bin/GTLC.ml", line 227, characters 13-14:
+> Warning 27: unused variable t.
+$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -a -o bin/GTLC.cma bin/.GTLC.objs/byte/aST.cmo bin/.GTLC.objs/byte/parser.cmo bin/.GTLC.objs/byte/lexer.cmo bin/.GTLC.objs/byte/gTLC.cmo)
 $ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I test/.test.objs/byte -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -no-alias-deps -opaque -open Test -o test/.test.objs/byte/test__Main.cmo -c -impl test/main.pp.ml)
 $ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -a -o test/test.cma test/.test.objs/byte/test.cmo test/.test.objs/byte/test__Main.cmo)
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -g -bin-annot -I test/.test.inline-tests/.test.inline-tests.eobjs/byte -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runner/lib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -I test/.test.objs/byte -no-alias-deps -o test/.test.inline-tests/.test.inline-tests.eobjs/byte/dune__exe__Inline_test_runner_test.cmo -c -impl test/.test.inline-tests/inline_test_runner_test.ml-gen)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I test/.test.objs/byte -I test/.test.objs/native -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -I bin/.GTLC.objs/native -intf-suffix .ml -no-alias-deps -opaque -open Test -o test/.test.objs/native/test__Main.cmx -c -impl test/main.pp.ml)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -a -o test/test.cmxa test/.test.objs/native/test.cmx test/.test.objs/native/test__Main.cmx)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -g -I test/.test.inline-tests/.test.inline-tests.eobjs/byte -I test/.test.inline-tests/.test.inline-tests.eobjs/native -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runner/lib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -I bin/.GTLC.objs/native -I test/.test.objs/byte -I test/.test.objs/native -intf-suffix .ml-gen -no-alias-deps -o test/.test.inline-tests/.test.inline-tests.eobjs/native/dune__exe__Inline_test_runner_test.cmx -c -impl test/.test.inline-tests/inline_test_runner_test.ml-gen)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -shared -linkall -I test -o test/test.cmxs test/test.cmxa)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -g -o test/.test.inline-tests/inline_test_runner_test.exe /Users/eakubilo/.opam/default/lib/base/base_internalhash_types/base_internalhash_types.cmxa -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types /Users/eakubilo/.opam/default/lib/base/caml/caml.cmxa /Users/eakubilo/.opam/default/lib/sexplib0/sexplib0.cmxa /Users/eakubilo/.opam/default/lib/base/shadow_stdlib/shadow_stdlib.cmxa /Users/eakubilo/.opam/default/lib/base/base.cmxa -I /Users/eakubilo/.opam/default/lib/base /Users/eakubilo/.opam/default/lib/ppx_inline_test/config/inline_test_config.cmxa /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib/ppx_inline_test_lib.cmxa bin/GTLC.cmxa test/test.cmxa /Users/eakubilo/.opam/default/lib/ppx_inline_test/runner/lib/ppx_inline_test_runner_lib.cmxa -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runner/lib test/.test.inline-tests/.test.inline-tests.eobjs/native/dune__exe__Inline_test_runner_test.cmx -linkall)
-$ (cd _build/.sandbox/0095f6acfb072deb3375870a0b9cb329/default/test && .test.inline-tests/inline_test_runner_test.exe inline-test-runner test -source-tree-root .. -diff-cmd -)
-> File "test/main.ml", line 141, characters 0-193: <<(evalString "(\\y.y) (\\x:int.x)") =   (F    [...]>> is false.
->
-> FAILED 1 / 36 tests
-[2]
-$ (cd _build/.sandbox/23b65ffe4b731d49e960cfbcaa6f7a19/default && .ppx/bfcab61e6a21ecf6d2f80029fc1ef484/ppx.exe --cookie 'inline_tests="enabled"' --cookie 'library-name="test"' -o test/main.pp.ml --impl test/main.ml -corrected-suffix .ppx-corrected -diff-cmd - -dump-ast)
-$ (cd _build/default && /Users/eakubilo/.opam/default/bin/ocamlformat --impl test/main.ml) > _build/default/test/.formatted/main.ml
-$ (cd _build/default && /usr/local/bin/ocamldep.opt -modules -impl test/main.pp.ml) > _build/default/test/.test.objs/main.pp.ml.d
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I test/.test.objs/byte -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -no-alias-deps -opaque -open Test -o test/.test.objs/byte/test__Main.cmo -c -impl test/main.pp.ml)
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -a -o test/test.cma test/.test.objs/byte/test.cmo test/.test.objs/byte/test__Main.cmo)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I test/.test.objs/byte -I test/.test.objs/native -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -I bin/.GTLC.objs/native -intf-suffix .ml -no-alias-deps -opaque -open Test -o test/.test.objs/native/test__Main.cmx -c -impl test/main.pp.ml)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -a -o test/test.cmxa test/.test.objs/native/test.cmx test/.test.objs/native/test__Main.cmx)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -shared -linkall -I test -o test/test.cmxs test/test.cmxa)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -g -o test/.test.inline-tests/inline_test_runner_test.exe /Users/eakubilo/.opam/default/lib/base/base_internalhash_types/base_internalhash_types.cmxa -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types /Users/eakubilo/.opam/default/lib/base/caml/caml.cmxa /Users/eakubilo/.opam/default/lib/sexplib0/sexplib0.cmxa /Users/eakubilo/.opam/default/lib/base/shadow_stdlib/shadow_stdlib.cmxa /Users/eakubilo/.opam/default/lib/base/base.cmxa -I /Users/eakubilo/.opam/default/lib/base /Users/eakubilo/.opam/default/lib/ppx_inline_test/config/inline_test_config.cmxa /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib/ppx_inline_test_lib.cmxa bin/GTLC.cmxa test/test.cmxa /Users/eakubilo/.opam/default/lib/ppx_inline_test/runner/lib/ppx_inline_test_runner_lib.cmxa -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runner/lib test/.test.inline-tests/.test.inline-tests.eobjs/native/dune__exe__Inline_test_runner_test.cmx -linkall)
-$ (cd _build/.sandbox/638ce84b76f38a4f1d68bd67d94d4ba8/default/test && .test.inline-tests/inline_test_runner_test.exe inline-test-runner test -source-tree-root .. -diff-cmd -)
-> File "test/main.ml", line 141, characters 0-230: <<(evalString "(\\y.y) (\\x:int.x)") =   (F    [...]>> is false.
->
-> FAILED 1 / 36 tests
-[2]
-$ (cd _build/.sandbox/199b424f54a53e98cd3f0bcb209fc6e3/default && .ppx/bfcab61e6a21ecf6d2f80029fc1ef484/ppx.exe --cookie 'inline_tests="enabled"' --cookie 'library-name="test"' -o test/main.pp.ml --impl test/main.ml -corrected-suffix .ppx-corrected -diff-cmd - -dump-ast)
-$ (cd _build/default && /Users/eakubilo/.opam/default/bin/ocamlformat --impl test/main.ml) > _build/default/test/.formatted/main.ml
-$ (cd _build/default && /usr/local/bin/ocamldep.opt -modules -impl test/main.pp.ml) > _build/default/test/.test.objs/main.pp.ml.d
-$ /usr/bin/git --no-pager diff --no-index --color=always -u _build/default/test/main.ml _build/default/test/.formatted/main.ml
-> diff --git a/_build/default/test/main.ml b/_build/default/test/.formatted/main.ml
-> index bde2238..c131b7a 100644
-> --- a/_build/default/test/main.ml
-> +++ b/_build/default/test/.formatted/main.ml
-> @@ -136,9 +136,13 @@ let%test _ = evalString "(\\y:int.y) (\\x:int.x) 1" = Int 1
->  
->  let%test _ = evalString "(\\y:bool.y) (\\x:int.x) 1" = Int 1
->  
-> -let%test _ = is_exception (fun _ -> evalString "(\\y:bool.y) (\\x:int.x)")
-> -make_fresh_label ()
-> -let l = make_fresh_label ();;
-> +let%test _ =
-> +  is_exception
-> +    (fun _ -> evalString "(\\y:bool.y) (\\x:int.x)")
-> +    make_fresh_label ()
-> +
-> +let l = make_fresh_label ()
-> +
->  let%test _ =
->    evalString "(\\y.y) (\\x:int.x)"
->    = F
-[1]
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I test/.test.objs/byte -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -no-alias-deps -opaque -open Test -o test/.test.objs/byte/test__Main.cmo -c -impl test/main.pp.ml)
-> File "test/main.ml", line 139, characters 13-25:
-> Error: This function has type (unit -> 'a) -> bool
->        It is applied to too many arguments; maybe you forgot a `;'.
-[2]
-$ (cd _build/.sandbox/adfc49e421d619eeebc014d3bcfad563/default && .ppx/bfcab61e6a21ecf6d2f80029fc1ef484/ppx.exe --cookie 'inline_tests="enabled"' --cookie 'library-name="test"' -o test/main.pp.ml --impl test/main.ml -corrected-suffix .ppx-corrected -diff-cmd - -dump-ast)
-$ (cd _build/default && /Users/eakubilo/.opam/default/bin/ocamlformat --impl test/main.ml) > _build/default/test/.formatted/main.ml
-$ (cd _build/default && /usr/local/bin/ocamldep.opt -modules -impl test/main.pp.ml) > _build/default/test/.test.objs/main.pp.ml.d
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I test/.test.objs/byte -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -no-alias-deps -opaque -open Test -o test/.test.objs/byte/test__Main.cmo -c -impl test/main.pp.ml)
-> File "test/main.ml", line 140, characters 2-14:
-> Error: This function has type (unit -> 'a) -> bool
->        It is applied to too many arguments; maybe you forgot a `;'.
-[2]
-$ (cd _build/.sandbox/9ecdba97a8bb1966bd6050ad10684346/default && .ppx/bfcab61e6a21ecf6d2f80029fc1ef484/ppx.exe --cookie 'inline_tests="enabled"' --cookie 'library-name="test"' -o test/main.pp.ml --impl test/main.ml -corrected-suffix .ppx-corrected -diff-cmd - -dump-ast)
-$ (cd _build/default && /Users/eakubilo/.opam/default/bin/ocamlformat --impl test/main.ml) > _build/default/test/.formatted/main.ml
-$ (cd _build/default && /usr/local/bin/ocamldep.opt -modules -impl test/main.pp.ml) > _build/default/test/.test.objs/main.pp.ml.d
-$ /usr/bin/git --no-pager diff --no-index --color=always -u _build/default/test/main.ml _build/default/test/.formatted/main.ml
-> diff --git a/_build/default/test/main.ml b/_build/default/test/.formatted/main.ml
-> index 887f996..0ff0546 100644
-> --- a/_build/default/test/main.ml
-> +++ b/_build/default/test/.formatted/main.ml
-> @@ -136,10 +136,10 @@ let%test _ = evalString "(\\y:int.y) (\\x:int.x) 1" = Int 1
->  
->  let%test _ = evalString "(\\y:bool.y) (\\x:int.x) 1" = Int 1
->  
-> -let%test _ =
-> -  is_exception
-> -    (fun _ -> evalString "(\\y:bool.y) (\\x:int.x)");;
-> -    make_fresh_label ()
-> +let%test _ = is_exception (fun _ -> evalString "(\\y:bool.y) (\\x:int.x)")
-> +
-> +;;
-> +make_fresh_label ()
->  
->  let l = make_fresh_label ()
->  
-[1]
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I test/.test.objs/byte -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -no-alias-deps -opaque -open Test -o test/.test.objs/byte/test__Main.cmo -c -impl test/main.pp.ml)
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -a -o test/test.cma test/.test.objs/byte/test.cmo test/.test.objs/byte/test__Main.cmo)
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -g -bin-annot -I test/.test.inline-tests/.test.inline-tests.eobjs/byte -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runner/lib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -I test/.test.objs/byte -no-alias-deps -o test/.test.inline-tests/.test.inline-tests.eobjs/byte/dune__exe__Inline_test_runner_test.cmo -c -impl test/.test.inline-tests/inline_test_runner_test.ml-gen)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I test/.test.objs/byte -I test/.test.objs/native -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -I bin/.GTLC.objs/native -intf-suffix .ml -no-alias-deps -opaque -open Test -o test/.test.objs/native/test__Main.cmx -c -impl test/main.pp.ml)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -a -o test/test.cmxa test/.test.objs/native/test.cmx test/.test.objs/native/test__Main.cmx)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -g -I test/.test.inline-tests/.test.inline-tests.eobjs/byte -I test/.test.inline-tests/.test.inline-tests.eobjs/native -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runner/lib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -I bin/.GTLC.objs/native -I test/.test.objs/byte -I test/.test.objs/native -intf-suffix .ml-gen -no-alias-deps -o test/.test.inline-tests/.test.inline-tests.eobjs/native/dune__exe__Inline_test_runner_test.cmx -c -impl test/.test.inline-tests/inline_test_runner_test.ml-gen)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -shared -linkall -I test -o test/test.cmxs test/test.cmxa)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -g -o test/.test.inline-tests/inline_test_runner_test.exe /Users/eakubilo/.opam/default/lib/base/base_internalhash_types/base_internalhash_types.cmxa -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types /Users/eakubilo/.opam/default/lib/base/caml/caml.cmxa /Users/eakubilo/.opam/default/lib/sexplib0/sexplib0.cmxa /Users/eakubilo/.opam/default/lib/base/shadow_stdlib/shadow_stdlib.cmxa /Users/eakubilo/.opam/default/lib/base/base.cmxa -I /Users/eakubilo/.opam/default/lib/base /Users/eakubilo/.opam/default/lib/ppx_inline_test/config/inline_test_config.cmxa /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib/ppx_inline_test_lib.cmxa bin/GTLC.cmxa test/test.cmxa /Users/eakubilo/.opam/default/lib/ppx_inline_test/runner/lib/ppx_inline_test_runner_lib.cmxa -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runner/lib test/.test.inline-tests/.test.inline-tests.eobjs/native/dune__exe__Inline_test_runner_test.cmx -linkall)
-$ (cd _build/.sandbox/ff7e60e5eb556b87d46063a4de34f604/default/test && .test.inline-tests/inline_test_runner_test.exe inline-test-runner test -source-tree-root .. -diff-cmd -)
-> File "test/main.ml", line 146, characters 0-218: <<(evalString "(\\y.y) (\\x:int.x)") =   (F    [...]>> is false.
->
-> FAILED 1 / 36 tests
-[2]
-$ (cd _build/.sandbox/29e96389a31bc683653a276c4ed1edad/default && .ppx/bfcab61e6a21ecf6d2f80029fc1ef484/ppx.exe --cookie 'inline_tests="enabled"' --cookie 'library-name="test"' -o test/main.pp.ml --impl test/main.ml -corrected-suffix .ppx-corrected -diff-cmd - -dump-ast)
-$ (cd _build/default && /Users/eakubilo/.opam/default/bin/ocamlformat --impl test/main.ml) > _build/default/test/.formatted/main.ml
-$ (cd _build/default && /usr/local/bin/ocamldep.opt -modules -impl test/main.pp.ml) > _build/default/test/.test.objs/main.pp.ml.d
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I test/.test.objs/byte -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -no-alias-deps -opaque -open Test -o test/.test.objs/byte/test__Main.cmo -c -impl test/main.pp.ml)
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -a -o test/test.cma test/.test.objs/byte/test.cmo test/.test.objs/byte/test__Main.cmo)
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -g -bin-annot -I test/.test.inline-tests/.test.inline-tests.eobjs/byte -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runner/lib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -I test/.test.objs/byte -no-alias-deps -o test/.test.inline-tests/.test.inline-tests.eobjs/byte/dune__exe__Inline_test_runner_test.cmo -c -impl test/.test.inline-tests/inline_test_runner_test.ml-gen)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I test/.test.objs/byte -I test/.test.objs/native -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -I bin/.GTLC.objs/native -intf-suffix .ml -no-alias-deps -opaque -open Test -o test/.test.objs/native/test__Main.cmx -c -impl test/main.pp.ml)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -a -o test/test.cmxa test/.test.objs/native/test.cmx test/.test.objs/native/test__Main.cmx)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -g -I test/.test.inline-tests/.test.inline-tests.eobjs/byte -I test/.test.inline-tests/.test.inline-tests.eobjs/native -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runner/lib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -I bin/.GTLC.objs/native -I test/.test.objs/byte -I test/.test.objs/native -intf-suffix .ml-gen -no-alias-deps -o test/.test.inline-tests/.test.inline-tests.eobjs/native/dune__exe__Inline_test_runner_test.cmx -c -impl test/.test.inline-tests/inline_test_runner_test.ml-gen)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -shared -linkall -I test -o test/test.cmxs test/test.cmxa)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -g -o test/.test.inline-tests/inline_test_runner_test.exe /Users/eakubilo/.opam/default/lib/base/base_internalhash_types/base_internalhash_types.cmxa -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types /Users/eakubilo/.opam/default/lib/base/caml/caml.cmxa /Users/eakubilo/.opam/default/lib/sexplib0/sexplib0.cmxa /Users/eakubilo/.opam/default/lib/base/shadow_stdlib/shadow_stdlib.cmxa /Users/eakubilo/.opam/default/lib/base/base.cmxa -I /Users/eakubilo/.opam/default/lib/base /Users/eakubilo/.opam/default/lib/ppx_inline_test/config/inline_test_config.cmxa /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib/ppx_inline_test_lib.cmxa bin/GTLC.cmxa test/test.cmxa /Users/eakubilo/.opam/default/lib/ppx_inline_test/runner/lib/ppx_inline_test_runner_lib.cmxa -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runner/lib test/.test.inline-tests/.test.inline-tests.eobjs/native/dune__exe__Inline_test_runner_test.cmx -linkall)
-$ (cd _build/.sandbox/92cc33bdd23cfa843a2dd0aa40b1cd19/default/test && .test.inline-tests/inline_test_runner_test.exe inline-test-runner test -source-tree-root .. -diff-cmd -)
-> File "test/main.ml", line 146, characters 0-218: <<(evalString "(\\y.y) (\\x:int.x)") =   (F    [...]>> is false.
->
-> FAILED 1 / 36 tests
-[2]
-$ (cd _build/.sandbox/29740639b82032ef4d8d084d4fd78ad3/default && .ppx/bfcab61e6a21ecf6d2f80029fc1ef484/ppx.exe --cookie 'inline_tests="enabled"' --cookie 'library-name="test"' -o test/main.pp.ml --impl test/main.ml -corrected-suffix .ppx-corrected -diff-cmd - -dump-ast)
-> File "test/main.ml", line 136, characters 0-16:
-> Error: Syntax error
-[1]
-$ (cd _build/default && /Users/eakubilo/.opam/default/bin/ocamlformat --impl test/main.ml) > _build/default/test/.formatted/main.ml
-> ocamlformat: ignoring "test/main.ml" (syntax error)
-> File "test/main.ml", line 136, characters 0-16:
-> Error: Syntax error
-[1]
-$ (cd _build/.sandbox/6c6d391ff263a0c8336ada5859b13715/default && .ppx/bfcab61e6a21ecf6d2f80029fc1ef484/ppx.exe --cookie 'inline_tests="enabled"' --cookie 'library-name="test"' -o test/main.pp.ml --impl test/main.ml -corrected-suffix .ppx-corrected -diff-cmd - -dump-ast)
-$ (cd _build/default && /Users/eakubilo/.opam/default/bin/ocamlformat --impl test/main.ml) > _build/default/test/.formatted/main.ml
-$ (cd _build/default && /usr/local/bin/ocamldep.opt -modules -impl test/main.pp.ml) > _build/default/test/.test.objs/main.pp.ml.d
-$ /usr/bin/git --no-pager diff --no-index --color=always -u _build/default/test/main.ml _build/default/test/.formatted/main.ml
-> diff --git a/_build/default/test/main.ml b/_build/default/test/.formatted/main.ml
-> index 3ed086e..f49dfc5 100644
-> --- a/_build/default/test/main.ml
-> +++ b/_build/default/test/.formatted/main.ml
-> @@ -130,14 +130,24 @@ let%test _ = well_typed_gtlc [] (parse "false") = B Bool
->  let%test _ =
->    evalString "(\\x.x) 1" = F (Int 1, Contract (B Int, Dyn, make_fresh_label ()))
->  
-> -let%test _ = evalString "(\\x:int.x) 1" = Int 1;;
-> +let%test _ = evalString "(\\x:int.x) 1" = Int 1
-> +
-> +;;
->  make_fresh_label ()
-> -let%test _ = evalString "(\\y:int.y) (\\x:int.x) 1" = Int 1 ;;
-> +
-> +let%test _ = evalString "(\\y:int.y) (\\x:int.x) 1" = Int 1
-> +
-> +;;
-> +make_fresh_label () make_fresh_label ()
-> +
-> +let%test _ = evalString "(\\y:bool.y) (\\x:int.x) 1" = Int 1
-> +
-> +;;
->  make_fresh_label ()
-> +
-> +;;
->  make_fresh_label ()
-> -let%test _ = evalString "(\\y:bool.y) (\\x:int.x) 1" = Int 1;;
-> -make_fresh_label ();;
-> -make_fresh_label ();;
-> +
->  let%test _ = is_exception (fun _ -> evalString "(\\y:bool.y) (\\x:int.x)")
->  
->  ;;
-[1]
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I test/.test.objs/byte -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -no-alias-deps -opaque -open Test -o test/.test.objs/byte/test__Main.cmo -c -impl test/main.pp.ml)
-> File "test/main.ml", line 136, characters 0-16:
-> Error: This function has type unit -> AST.blame_label
->        It is applied to too many arguments; maybe you forgot a `;'.
-[2]
-$ (cd _build/.sandbox/cf62a90154fb58ccecb2d55193560840/default && .ppx/bfcab61e6a21ecf6d2f80029fc1ef484/ppx.exe --cookie 'inline_tests="enabled"' --cookie 'library-name="test"' -o test/main.pp.ml --impl test/main.ml -corrected-suffix .ppx-corrected -diff-cmd - -dump-ast)
-$ (cd _build/default && /Users/eakubilo/.opam/default/bin/ocamlformat --impl test/main.ml) > _build/default/test/.formatted/main.ml
-$ (cd _build/default && /usr/local/bin/ocamldep.opt -modules -impl test/main.pp.ml) > _build/default/test/.test.objs/main.pp.ml.d
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I test/.test.objs/byte -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -no-alias-deps -opaque -open Test -o test/.test.objs/byte/test__Main.cmo -c -impl test/main.pp.ml)
-> File "test/main.ml", line 141, characters 0-16:
-> Error: This function has type unit -> AST.blame_label
->        It is applied to too many arguments; maybe you forgot a `;'.
-[2]
-$ (cd _build/.sandbox/731feb19c2bd9a7d2879d75793606c88/default && .ppx/bfcab61e6a21ecf6d2f80029fc1ef484/ppx.exe --cookie 'inline_tests="enabled"' --cookie 'library-name="test"' -o test/main.pp.ml --impl test/main.ml -corrected-suffix .ppx-corrected -diff-cmd - -dump-ast)
-$ (cd _build/default && /Users/eakubilo/.opam/default/bin/ocamlformat --impl test/main.ml) > _build/default/test/.formatted/main.ml
-$ (cd _build/default && /usr/local/bin/ocamldep.opt -modules -impl test/main.pp.ml) > _build/default/test/.test.objs/main.pp.ml.d
-$ /usr/bin/git --no-pager diff --no-index --color=always -u _build/default/test/main.ml _build/default/test/.formatted/main.ml
-> diff --git a/_build/default/test/main.ml b/_build/default/test/.formatted/main.ml
-> index e74e9da..c3f9854 100644
-> --- a/_build/default/test/main.ml
-> +++ b/_build/default/test/.formatted/main.ml
-> @@ -138,7 +138,10 @@ make_fresh_label ()
->  let%test _ = evalString "(\\y:int.y) (\\x:int.x) 1" = Int 1
->  
->  ;;
-> -make_fresh_label () ;;make_fresh_label ()
-> +make_fresh_label ()
-> +
-> +;;
-> +make_fresh_label ()
->  
->  let%test _ = evalString "(\\y:bool.y) (\\x:int.x) 1" = Int 1
->  
-[1]
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I test/.test.objs/byte -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -no-alias-deps -opaque -open Test -o test/.test.objs/byte/test__Main.cmo -c -impl test/main.pp.ml)
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -a -o test/test.cma test/.test.objs/byte/test.cmo test/.test.objs/byte/test__Main.cmo)
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -g -bin-annot -I test/.test.inline-tests/.test.inline-tests.eobjs/byte -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runner/lib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -I test/.test.objs/byte -no-alias-deps -o test/.test.inline-tests/.test.inline-tests.eobjs/byte/dune__exe__Inline_test_runner_test.cmo -c -impl test/.test.inline-tests/inline_test_runner_test.ml-gen)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I test/.test.objs/byte -I test/.test.objs/native -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -I bin/.GTLC.objs/native -intf-suffix .ml -no-alias-deps -opaque -open Test -o test/.test.objs/native/test__Main.cmx -c -impl test/main.pp.ml)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -a -o test/test.cmxa test/.test.objs/native/test.cmx test/.test.objs/native/test__Main.cmx)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -g -I test/.test.inline-tests/.test.inline-tests.eobjs/byte -I test/.test.inline-tests/.test.inline-tests.eobjs/native -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runner/lib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -I bin/.GTLC.objs/native -I test/.test.objs/byte -I test/.test.objs/native -intf-suffix .ml-gen -no-alias-deps -o test/.test.inline-tests/.test.inline-tests.eobjs/native/dune__exe__Inline_test_runner_test.cmx -c -impl test/.test.inline-tests/inline_test_runner_test.ml-gen)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -shared -linkall -I test -o test/test.cmxs test/test.cmxa)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -g -o test/.test.inline-tests/inline_test_runner_test.exe /Users/eakubilo/.opam/default/lib/base/base_internalhash_types/base_internalhash_types.cmxa -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types /Users/eakubilo/.opam/default/lib/base/caml/caml.cmxa /Users/eakubilo/.opam/default/lib/sexplib0/sexplib0.cmxa /Users/eakubilo/.opam/default/lib/base/shadow_stdlib/shadow_stdlib.cmxa /Users/eakubilo/.opam/default/lib/base/base.cmxa -I /Users/eakubilo/.opam/default/lib/base /Users/eakubilo/.opam/default/lib/ppx_inline_test/config/inline_test_config.cmxa /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib/ppx_inline_test_lib.cmxa bin/GTLC.cmxa test/test.cmxa /Users/eakubilo/.opam/default/lib/ppx_inline_test/runner/lib/ppx_inline_test_runner_lib.cmxa -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runner/lib test/.test.inline-tests/.test.inline-tests.eobjs/native/dune__exe__Inline_test_runner_test.cmx -linkall)
-$ (cd _build/.sandbox/ac33be891d754cf303c64d86e9da3c29/default/test && .test.inline-tests/inline_test_runner_test.exe inline-test-runner test -source-tree-root .. -diff-cmd -)
-$ (cd _build/.sandbox/3e08c7ff825a17e6b1b58eda902bfd37/default && .ppx/bfcab61e6a21ecf6d2f80029fc1ef484/ppx.exe --cookie 'inline_tests="enabled"' --cookie 'library-name="test"' -o test/main.pp.ml --impl test/main.ml -corrected-suffix .ppx-corrected -diff-cmd - -dump-ast)
-$ (cd _build/default && /Users/eakubilo/.opam/default/bin/ocamlformat --impl test/main.ml) > _build/default/test/.formatted/main.ml
-$ (cd _build/default && /usr/local/bin/ocamldep.opt -modules -impl test/main.pp.ml) > _build/default/test/.test.objs/main.pp.ml.d
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I test/.test.objs/byte -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -no-alias-deps -opaque -open Test -o test/.test.objs/byte/test__Main.cmo -c -impl test/main.pp.ml)
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -a -o test/test.cma test/.test.objs/byte/test.cmo test/.test.objs/byte/test__Main.cmo)
-$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -g -bin-annot -I test/.test.inline-tests/.test.inline-tests.eobjs/byte -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runner/lib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -I test/.test.objs/byte -no-alias-deps -o test/.test.inline-tests/.test.inline-tests.eobjs/byte/dune__exe__Inline_test_runner_test.cmo -c -impl test/.test.inline-tests/inline_test_runner_test.ml-gen)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I test/.test.objs/byte -I test/.test.objs/native -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -I bin/.GTLC.objs/native -intf-suffix .ml -no-alias-deps -opaque -open Test -o test/.test.objs/native/test__Main.cmx -c -impl test/main.pp.ml)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -a -o test/test.cmxa test/.test.objs/native/test.cmx test/.test.objs/native/test__Main.cmx)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -g -I test/.test.inline-tests/.test.inline-tests.eobjs/byte -I test/.test.inline-tests/.test.inline-tests.eobjs/native -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runner/lib -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/sexplib0 -I bin/.GTLC.objs/byte -I bin/.GTLC.objs/native -I test/.test.objs/byte -I test/.test.objs/native -intf-suffix .ml-gen -no-alias-deps -o test/.test.inline-tests/.test.inline-tests.eobjs/native/dune__exe__Inline_test_runner_test.cmx -c -impl test/.test.inline-tests/inline_test_runner_test.ml-gen)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -shared -linkall -I test -o test/test.cmxs test/test.cmxa)
-$ (cd _build/default && /usr/local/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -g -o test/.test.inline-tests/inline_test_runner_test.exe /Users/eakubilo/.opam/default/lib/base/base_internalhash_types/base_internalhash_types.cmxa -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types /Users/eakubilo/.opam/default/lib/base/caml/caml.cmxa /Users/eakubilo/.opam/default/lib/sexplib0/sexplib0.cmxa /Users/eakubilo/.opam/default/lib/base/shadow_stdlib/shadow_stdlib.cmxa /Users/eakubilo/.opam/default/lib/base/base.cmxa -I /Users/eakubilo/.opam/default/lib/base /Users/eakubilo/.opam/default/lib/ppx_inline_test/config/inline_test_config.cmxa /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib/ppx_inline_test_lib.cmxa bin/GTLC.cmxa test/test.cmxa /Users/eakubilo/.opam/default/lib/ppx_inline_test/runner/lib/ppx_inline_test_runner_lib.cmxa -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runner/lib test/.test.inline-tests/.test.inline-tests.eobjs/native/dune__exe__Inline_test_runner_test.cmx -linkall)
-$ (cd _build/.sandbox/169e8abe7898ae343d2f5f7a295463c7/default/test && .test.inline-tests/inline_test_runner_test.exe inline-test-runner test -source-tree-root .. -diff-cmd -)
+$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -bin-annot -I .utop/.utop.eobjs/byte -I /Users/eakubilo/.opam/default/lib/base -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types -I /Users/eakubilo/.opam/default/lib/base/caml -I /Users/eakubilo/.opam/default/lib/base/shadow_stdlib -I /Users/eakubilo/.opam/default/lib/bigarray-compat -I /Users/eakubilo/.opam/default/lib/camomile -I /Users/eakubilo/.opam/default/lib/camomile/default_config -I /Users/eakubilo/.opam/default/lib/camomile/dyn -I /Users/eakubilo/.opam/default/lib/camomile/lib_default -I /Users/eakubilo/.opam/default/lib/camomile/library -I /Users/eakubilo/.opam/default/lib/charInfo_width -I /Users/eakubilo/.opam/default/lib/findlib -I /Users/eakubilo/.opam/default/lib/lambda-term -I /Users/eakubilo/.opam/default/lib/lwt -I /Users/eakubilo/.opam/default/lib/lwt/unix -I /Users/eakubilo/.opam/default/lib/lwt_log -I /Users/eakubilo/.opam/default/lib/lwt_log/core -I /Users/eakubilo/.opam/default/lib/lwt_react -I /Users/eakubilo/.opam/default/lib/mew -I /Users/eakubilo/.opam/default/lib/mew_vi -I /Users/eakubilo/.opam/default/lib/mmap -I /Users/eakubilo/.opam/default/lib/ocplib-endian -I /Users/eakubilo/.opam/default/lib/ocplib-endian/bigstring -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/config -I /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib -I /Users/eakubilo/.opam/default/lib/react -I /Users/eakubilo/.opam/default/lib/result -I /Users/eakubilo/.opam/default/lib/seq -I /Users/eakubilo/.opam/default/lib/sexplib0 -I /Users/eakubilo/.opam/default/lib/trie -I /Users/eakubilo/.opam/default/lib/utop -I /Users/eakubilo/.opam/default/lib/zed -I /usr/local/lib/ocaml/compiler-libs -I /usr/local/lib/ocaml/threads -I bin/.GTLC.objs/byte -I test/.test.objs/byte -no-alias-deps -o .utop/.utop.eobjs/byte/dune__exe__Utop.cmo -c -impl .utop/utop.ml-gen)
+$ (cd _build/default && /usr/local/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -o .utop/utop.exe -custom /usr/local/lib/ocaml/compiler-libs/ocamlcommon.cma /usr/local/lib/ocaml/compiler-libs/ocamlbytecomp.cma /usr/local/lib/ocaml/compiler-libs/ocamltoplevel.cma /Users/eakubilo/.opam/default/lib/findlib/findlib.cma /Users/eakubilo/.opam/default/lib/findlib/findlib_top.cma -I /usr/local/lib/ocaml /Users/eakubilo/.opam/default/lib/result/result.cma /Users/eakubilo/.opam/default/lib/lwt/lwt.cma /usr/local/lib/ocaml/unix.cma -I /usr/local/lib/ocaml /usr/local/lib/ocaml/bigarray.cma -I /usr/local/lib/ocaml /Users/eakubilo/.opam/default/lib/bigarray-compat/bigarray_compat.cma /Users/eakubilo/.opam/default/lib/mmap/mmap.cma /Users/eakubilo/.opam/default/lib/ocplib-endian/ocplib_endian.cma /Users/eakubilo/.opam/default/lib/ocplib-endian/bigstring/ocplib_endian_bigstring.cma /usr/local/lib/ocaml/threads/threads.cma -I /usr/local/lib/ocaml /Users/eakubilo/.opam/default/lib/lwt/unix/lwt_unix.cma -I /Users/eakubilo/.opam/default/lib/lwt/unix /Users/eakubilo/.opam/default/lib/react/react.cma /Users/eakubilo/.opam/default/lib/lwt_react/lwt_react.cma /Users/eakubilo/.opam/default/lib/camomile/default_config/camomileDefaultConfig.cma /Users/eakubilo/.opam/default/lib/camomile/library/camomileLibrary.cma /Users/eakubilo/.opam/default/lib/camomile/lib_default/camomileLibraryDefault.cma /Users/eakubilo/.opam/default/lib/camomile/dyn/camomileLibraryDyn.cma /Users/eakubilo/.opam/default/lib/camomile/camomile_yuge.cma /Users/eakubilo/.opam/default/lib/charInfo_width/charInfo_width.cma /Users/eakubilo/.opam/default/lib/zed/zed.cma /Users/eakubilo/.opam/default/lib/lwt_log/core/lwt_log_core.cma /Users/eakubilo/.opam/default/lib/lwt_log/lwt_log.cma /Users/eakubilo/.opam/default/lib/trie/trie.cma /Users/eakubilo/.opam/default/lib/mew/mew.cma /Users/eakubilo/.opam/default/lib/mew_vi/mew_vi.cma /Users/eakubilo/.opam/default/lib/lambda-term/lambda_term.cma -I /Users/eakubilo/.opam/default/lib/lambda-term /Users/eakubilo/.opam/default/lib/utop/uTop.cma /Users/eakubilo/.opam/default/lib/base/base_internalhash_types/base_internalhash_types.cma -I /Users/eakubilo/.opam/default/lib/base/base_internalhash_types /Users/eakubilo/.opam/default/lib/base/caml/caml.cma /Users/eakubilo/.opam/default/lib/sexplib0/sexplib0.cma /Users/eakubilo/.opam/default/lib/base/shadow_stdlib/shadow_stdlib.cma /Users/eakubilo/.opam/default/lib/base/base.cma -I /Users/eakubilo/.opam/default/lib/base /Users/eakubilo/.opam/default/lib/ppx_inline_test/config/inline_test_config.cma /Users/eakubilo/.opam/default/lib/ppx_inline_test/runtime-lib/ppx_inline_test_lib.cma bin/GTLC.cma test/test.cma .utop/.utop.eobjs/byte/dune__exe__Utop.cmo -linkall -warn-error -31)
+> File "bin/GTLC.cma(Parser)", line 1:
+> Warning 31: files bin/GTLC.cma(Parser) and /usr/local/lib/ocaml/compiler-libs/ocamlcommon.cma(Parser) both define a module named Parser
+> File "bin/GTLC.cma(Lexer)", line 1:
+> Warning 31: files bin/GTLC.cma(Lexer) and /usr/local/lib/ocaml/compiler-libs/ocamlcommon.cma(Lexer) both define a module named Lexer

@@ -1,11 +1,21 @@
 open AST
 
+exception TypeError
+
+exception UnboundVariable
+
+exception WrongApplication
+
+exception InconsistentType
+
 let a = ref 0
 
+(*returns a label with an identifier that is not equal to any previously created label*)
 let make_fresh_label () =
   a := !a + 1 ;
   Label !a
 
+(*takes an expression with unlabeled applications returns expression with applications labelled*)
 let rec label_expression e : expr =
   match e with
   | UnlabeledApp (e1, e2) ->
@@ -15,11 +25,13 @@ let rec label_expression e : expr =
   | _ ->
       e
 
+(*parse a string and return an expression with applications labelled (if they exist).*)
 let parse (s : string) : expr =
   let lexbuf = Lexing.from_string s in
   let ast = Parser.prog Lexer.read lexbuf in
   label_expression ast
 
+(*consistency relation on two types, returns true if t1 ~ t2*)
 let rec consistency (t1, t2) =
   match (t1, t2) with
   | Dyn, _ ->
@@ -33,14 +45,7 @@ let rec consistency (t1, t2) =
   | _, _ ->
       false
 
-exception TypeError
-
-exception UnboundVariable
-
-exception WrongApplication
-
-exception InconsistentType
-
+(*looks up variable in context. if variable is bound to a type, return *)
 let rec lookup (var, gamma) =
   match gamma with
   | (x, t) :: xs ->
@@ -146,10 +151,6 @@ let make_fresh_var () =
  *)
 let rec rename name newname tm =
   match tm with
-  | True ->
-      True
-  | False ->
-      False
   | Var s ->
       if s = name then Var newname else Var s
   | App (t1, t2) ->
@@ -157,21 +158,17 @@ let rec rename name newname tm =
   | Lam (Var x, t, e) ->
       if x = name then Lam (Var x, t, e)
       else Lam (Var x, t, rename name newname e)
+  | F (f, c) ->
+      F (rename name newname f, c)
   | _ ->
       tm
 
 let rec subst var s term =
   match term with
-  | True ->
-      True
-  | False ->
-      False
-  | Int i ->
-      Int i
   | F (f, c) ->
       F (subst var s f, c)
-  | Var y ->
-      if y = var then s else term
+  | Var b ->
+      if b = var then s else term
   | App (t1, t2) ->
       App (subst var s t1, subst var s t2)
   | Lam (Var y, t, e) ->
@@ -180,7 +177,7 @@ let rec subst var s term =
         let fresh = make_fresh_var () in
         let newE = rename y fresh e in
         Lam (Var fresh, t, newE)
-  | Blame (_, _) ->
+  | _ ->
       term
 
 let rec eval f =
@@ -212,6 +209,8 @@ let rec eval f =
       if f <> f' then F (f', c) else f
   | F (Blame (t, l), Contract (t1, t2, _)) when t = t1 ->
       Blame (t2, l)
+  | App (e, f) when not (is_value e) ->
+      App (eval e, f)
   | App (e, f) when not (is_value f) ->
       App (e, eval f)
 
